@@ -107,7 +107,7 @@ Before diving into the results, it’s important to understand the different **p
     where j represents the wine type (red or white), and $\beta_{i,j}$ are the coefficients specific to each wine type.
 
 2.  **Hierarchical Partial Pooling**: the red and white wines are modeled  
-    independently, but with shared information through group-level priors, as explained in [**Hierarchical Bayesian Logistic Regression**](#**Hierarchical%20Bayesian%20Logistic%20Regression**)
+    independently, but with shared information through group-level priors, as explained in **Hierarchical Bayesian Logistic Regression**
 
 3.  **Pooling**: The simplest model, where all the data from both red and white wines are combined, treating both types as identical. This model does not allow for any differences between red and white wines and fits a single set of coefficients for both groups. The model is expressed as:
 
