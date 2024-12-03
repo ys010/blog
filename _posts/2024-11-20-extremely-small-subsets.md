@@ -21,8 +21,6 @@ To see Bayesian sampling in action, let’s revisit the UCI wine quality dataset
 **Logistic Regression Model**
 
 The model predicts the probability of a wine being “good” (scores greater then 7 in a 1 to 10 score range) as:
-$$ a $$
-
 
 $$
 P(y = 1 \mid \mathbf{x}, \boldsymbol{\beta}) = \frac{1}{1 + e^{-\boldsymbol{\phi(x)}}}
