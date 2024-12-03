@@ -117,7 +117,7 @@ Before diving into the results, it’s important to understand the different **p
 
 4.  For completeness, we should add a 4th case, **Hierarchical No Pooling**: the red and white wines are modeled independently, and the coefficients for each wine type are estimated separately. The model still imposes a hierarchical structure, but the posteriors for each wine type are sampled independently resulting in independent set of mean $${\mu}_{\text{red}}$$, $${\mu}_{\text{white}}$$
 
-The first metric we'll use is the **Leave-One-Out Cross-Validation (LOO-CV)** scores, which estimate the model’s out-of-sample predictive accuracy. Lower LOO-CV scores indicate better predictive performance (todo: elaborate on the confidence interval here)
+The first metric we'll use is the **Leave-One-Out Cross-Validation (LOO-CV)** scores, which estimate the model’s out-of-sample predictive accuracy. Higher LOO-CV scores indicate better predictive performance (todo: elaborate on the confidence interval here)
 
 | Model                            | Red Wines     | White Wines    | Both Wines     |
 | -------------------------------- | ------------- | -------------- | -------------- |
