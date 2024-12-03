@@ -1,20 +1,18 @@
 ---
 title: Modeling and analysis of extremely small subsets
 date: 2024-11-20 00:00:00 +/-0000
-categories: [Bayesian inference]
-tags: [hierarchical]     # TAG names should always be lowercase
+categories: [Machine learning, Bayesian inference]
+tags: [modeling, hierarchical]     # TAG names should always be lowercase
 math: true
 ---
 
 ## Background
 
-In data modeling and analysis, small datasets become even more challenging when the data is naturally **partitioned into subgroups**. Whether it’s customer segments, regional variations, or types of wine, these partitions often require separate analysis, further shrinking the data available for each group. Traditional approaches either ignore these partitions, losing critical distinctions, or treat them entirely separately, amplifying the limitations of small sample sizes. This tension—balancing subgroup specificity with the need for robust insights—demands a smarter solution. Enter **Hierarchical Bayesian Inference**, a method that thrives in partitioned datasets by borrowing strength across groups while preserving their unique characteristics. By unlocking the power of shared information, it turns partitioned, small datasets into a fertile ground for meaningful and actionable insights.
+In data modeling and analysis, small datasets become even more challenging when the data is naturally **partitioned into subgroups**. Whether it’s customer segments, regional variations, or types of wine, these partitions often require separate analysis, further shrinking the data available for each group. Traditional approaches either ignore these partitions, losing critical distinctions, or treat them entirely separately, amplifying the limitations of small sample sizes. Enter **Hierarchical Bayesian Inference**, a method that thrives in partitioned datasets by borrowing strength across groups while preserving their unique characteristics. By unlocking the power of shared information, it turns partitioned, small datasets into a fertile ground for meaningful and actionable insights. **In this post we will see how, not only using a hierarchical model achieves an improved accuracy, but also enables unique insights, which are not possible using traditional approaches.**
+In the following sections, we’ll explore the foundations of Bayesian inference, frame the wine-tasting example to highlight its practical applications, delve into the results and benchmarking of different modeling approaches, and discuss how hierarchical methods compare to alternatives.
 
-## Overview
-
-To unlock the full potential of Hierarchical Bayesian Inference, it helps to start with the basics of Bayesian thinking: a method that updates prior knowledge with new evidence to account for uncertainty. In the following sections, we’ll explore the foundations of Bayesian inference, frame the wine-tasting example to highlight its practical applications, delve into the results and benchmarking of different modeling approaches, and discuss how hierarchical methods compare to traditional alternatives.
-
-At the heart of Bayesian inference lies the **posterior distribution**, which represents updated beliefs about a parameter after incorporating observed data. But how do we work with the posterior to make predictions or extract insights? In practice, we often can’t calculate the posterior analytically, especially in complex models, so we turn to **sampling** methods like **Markov Chain Monte Carlo (MCMC)**. For the sense of brevity we won't expand on MCMC methods and technicalities such as analyzing and validating the sampling process.
+## Introduction
+To unlock the full potential of Hierarchical Bayesian Inference, it helps to start with the basics of Bayesian thinking: a method that updates prior knowledge with new evidence to account for uncertainty. At the heart of Bayesian inference lies the **posterior distribution**, which represents updated beliefs about a parameter after incorporating observed data. But how do we work with the posterior to make predictions or extract insights? In practice, we often can’t calculate the posterior analytically, especially in complex models, so we turn to **sampling** methods like **Markov Chain Monte Carlo (MCMC)**. For the sense of brevity we won't expand on MCMC methods and technicalities such as analyzing and validating the sampling process.
 
 ## Wine tasting analysis
 
