@@ -20,7 +20,7 @@ To see Bayesian sampling in action, let’s revisit the UCI wine quality dataset
 
 **Logistic Regression Model**
 
-The model predicts the probability of a wine being “good” (scores greater then 7 in a 1 to 10 score range) as:
+The model predicts the probability of a wine being “good” (scores greater then 7 in psychochimical test with 1 to 10 score range) as:
 
 $$
 P(y = 1 \mid \mathbf{x}, \boldsymbol{\beta}) = \frac{1}{1 + e^{-\boldsymbol{\phi(x)}}}
@@ -132,8 +132,10 @@ Additionally, **pooling** (the simplest model) shows the worst performance overa
 
 The **Hierarchical No Pooling** model performs similarly to **no pooling**, with separate models for red and white wines, but still with a hierarchical structure that imposes some shared uncertainty between the two. This model does not significantly improve upon the **no pooling** approach. From here we can conclude that the additional complexity did not contribute on it's own in the **Hierarchical Partial Pooling** case.
 
-Now, let's see how hierarchical modeling can offer key insight on the attributes effect (linear coefficients values) and effectively handle the data’s structure.
+Now, let's see how hierarchical modeling can offer unique insights on the attributes effect (linear coefficients values) and effectively handle the data’s structure.
 **Figure 1** visualizes the pairwise relationships and distributions of physicochemical attributes for red and white wines (MLE is the standard maximum likelihood estimator)
 ![](/assets/images/coeffs_box_plot.png)\*Figure 1: posterior predictive distributions of coefficients
 
-From figure 1, we observe that while the MLE coefficients were mostly consistent with the no pooling results, as they fell within the 95% confidence intervals of the no pooling coefficients, partial pooling leveraged the shared information and allowed for a distinct and more extreme attribute distributions such as for volatile acidity, residual sugar and density of white wines.
+When looking at the effect of volatile acidity, residual sugar and density of white wines in Figure 1, we observe that
+partial pooling allowed for a more extreme attribute distributions thus giving new insight about their relative effect in white wines,
+and the no pooling results are mostly consistent with the MLE coefficients, as they fell within the 95% confidence intervals of the no pooling coefficients.
