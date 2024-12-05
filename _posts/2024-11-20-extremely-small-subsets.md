@@ -166,3 +166,5 @@ Now, let's see how hierarchical modeling can offer unique insights on the attri
 When looking at the effect of volatile acidity, residual sugar and density of white wines in Figure 1, we observe that
 partial pooling allowed for a more extreme attribute distributions thus giving new insight about their relative effect in white wines,
 and the no pooling results are mostly consistent with the MLE coefficients, as they fell within the 95% confidence intervals of the no pooling coefficients
+
+To conclude the results, not only we saw consistent imporved accuracy of the hierarchical model relative to other models, it also enabled new insights on white wines and the effect of attributes such volatile acidity, residual sugar and density.
