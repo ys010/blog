@@ -15,7 +15,7 @@ In the following sections, we’ll explore the foundations of Bayesian inference
 
 To unlock the full potential of Hierarchical Bayesian Inference, it helps to start with the basics of Bayesian thinking: a method that updates prior knowledge with new evidence to account for uncertainty. The basic idea is that we start with prior distributions to represent our beliefs, and then use observed data to update the distributions and get the **posterior distribution**. In practice, we often can’t calculate the posterior analytically, especially in complex models, so we turn to **sampling** methods like **Markov Chain Monte Carlo (MCMC)**. So fitting a parameterized model actually involves setting the parameters' prior distributions and then using a sampling method to get samples from the posterior.
 ### Example
-Lets use an example of a coin flip: We'll use a prior for the head/tail probablity $$p\sim{} \mathcal{U}[0,1]$$. We want to update our belief on the distribution of $$\boldsymbol{p}$$ using a series of a observations. The likelihood of observing the series $$\mathcal{D} = \{y_1, y_2,..,y_n\}$$ is:
+Lets use an example of a coin flip[^1]: We'll use a prior for the head/tail probablity $$p\sim{} \mathcal{U}[0,1]$$. We want to update our belief on the distribution of $$\boldsymbol{p}$$ using a series of a observations. The likelihood of observing the series $$\mathcal{D} = \{y_1, y_2,..,y_n\}$$ is:
 $$
 P(\mathcal{D} \mid \boldsymbol{p}) = \prod_{i=1}^{n} p^{y_i} (1 - p)^{1 - y_i}
 $$
@@ -34,9 +34,9 @@ $$
 $$
 
 We set $$r=min(r,1)$$  
-Then randomly, with probability $$\boldsymbol{r}$$, we accept the new candidate as a sample $$p_i$$ .
+Then randomly, with probability $$\boldsymbol{r}$$, we accept the new candidate. After enough iterations we get the samples series we wanted. 
 
-In this case it is, actually, possible to calculate the posterior $$p\sim Beta(1+\sum{y_i}, 1+n-\sum{y_i})$$
+[^1]: In this case it is, actually, possible to calculate the posterior $$p\sim Beta(1+\sum{y_i}, 1+n-\sum{y_i})$$
 
 For the sense of brevity we won't expand on MCMC methods and technicalities such as analyzing and validating the sampling process.
 
@@ -127,11 +127,7 @@ Before diving into the results, it’s important to understand the different **p
     $$
 
     where j represents the wine type (red or white), and $\beta_{i,j}$ are the coefficients specific to each wine type.
-
-2.  **Hierarchical Partial Pooling**: the red and white wines are modeled  
-    independently, but with shared information through group-level priors, as explained in **Hierarchical Bayesian Logistic Regression**
-
-3.  **Pooling**: The simplest model, where all the data from both red and white wines are combined, treating both types as identical. This model does not allow for any differences between red and white wines and fits a single set of coefficients for both groups. The model is expressed as:
+2.  **Pooling**: The simplest model, where all the data from both red and white wines are combined, treating both types as identical. This model does not allow for any differences between red and white wines and fits a single set of coefficients for both groups. The model is expressed as:
 
     $$
     \phi_n = \sum_{i=1}^{11} \beta_i x_{n,i}
@@ -139,16 +135,21 @@ Before diving into the results, it’s important to understand the different **p
 
     This method is the least flexible, as it doesn’t account for the potential differences between the two wine types.
 
-4.  For completeness, we should add a 4th case, **Hierarchical No Pooling**: the red and white wines are modeled independently, and the coefficients for each wine type are estimated separately. The model still imposes a hierarchical structure, but the posteriors for each wine type are sampled independently resulting in independent set of mean $${\mu}_{\text{red}}$$, $${\mu}_{\text{white}}$$
+
+3.  **Hierarchical Partial Pooling**: the red and white wines are modeled  
+    independently, but with shared information through group-level priors, as explained in **Hierarchical Bayesian Logistic Regression**
+
+4.  For completeness, we should add a 4th case, **Hierarchical No Pooling**: the basic idea in this case is to train the more complex hierarchical model, but
+with the red and white wines subsets independently, resulting in independent set of mean $${\mu}_{\text{red}}$$, $${\mu}_{\text{white}}$$. This case helps to distiguish if the accuracy improves mainly due to the more complex model or due to the utilization of partial pooling in the 3rd case.
 
 The first metric we'll use is the **Leave-One-Out Cross-Validation (LOO-CV)** scores, which estimate the model’s out-of-sample predictive accuracy. Higher LOO-CV scores indicate better predictive performance.
 
 | Model                            | Red Wines     | White Wines    | Both Wines     |
 | -------------------------------- | ------------- | -------------- | -------------- |
-| **Hierarchical Partial Pooling** | -839.4 ± 20.6 | -2485.9 ± 36.6 | -3325.3 ± 42.0 |
 | **No Pooling**                   | -847.2 ± 20.6 | -2824.3 ± 31.9 |                |
-| **Hierarchical No Pooling**      | -847.4 ± 20.7 | -2824.2 ± 31.9 |                |
 | **Pooling**                      | -947.3 ± 24.2 | -2720.6 ± 28.7 | -3667.9 ± 37.5 |
+| **Hierarchical Partial Pooling** | -839.4 ± 20.6 | -2485.9 ± 36.6 | -3325.3 ± 42.0 |
+| **Hierarchical No Pooling**      | -847.4 ± 20.7 | -2824.2 ± 31.9 |                |
 
 \*Table 1: LOO-CV scores
 
