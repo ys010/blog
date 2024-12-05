@@ -23,7 +23,7 @@ and the updated posterior is proportional to:
 $$
 P(\boldsymbol{p} \mid \mathcal{D}) \propto P(\mathcal{D} \mid \boldsymbol{p})P(p)
 $$  
-We'll use a MCMC method called **Metropolis-Hastings** to sample a {$$p_1, p_2, .., p_n$$} series from the posterior: We iteratively propose new $$p_i$$ candidates and calculate their acceptance ratio:
+We'll use a MCMC method called **Metropolis-Hastings** to sample a {$$p_1, p_2, .., p_k$$} series from the posterior: We iteratively propose new $$p_i$$ candidates and calculate their acceptance ratio:
 
 $$
 \boldsymbol{r} = \frac{
