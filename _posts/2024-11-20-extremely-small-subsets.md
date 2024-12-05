@@ -12,7 +12,33 @@ In data modeling and analysis, small datasets become even more challenging when 
 In the following sections, we’ll explore the foundations of Bayesian inference, frame the wine-tasting example to highlight its practical applications, delve into the results and benchmarking of different modeling approaches, and discuss how hierarchical methods compare to alternatives.
 
 ## Introduction
-To unlock the full potential of Hierarchical Bayesian Inference, it helps to start with the basics of Bayesian thinking: a method that updates prior knowledge with new evidence to account for uncertainty. At the heart of Bayesian inference lies the **posterior distribution**, which represents updated beliefs about a parameter after incorporating observed data. But how do we work with the posterior to make predictions or extract insights? In practice, we often can’t calculate the posterior analytically, especially in complex models, so we turn to **sampling** methods like **Markov Chain Monte Carlo (MCMC)**. For the sense of brevity we won't expand on MCMC methods and technicalities such as analyzing and validating the sampling process.
+
+To unlock the full potential of Hierarchical Bayesian Inference, it helps to start with the basics of Bayesian thinking: a method that updates prior knowledge with new evidence to account for uncertainty. The basic idea is that we start with prior distributions to represent our beliefs, and then use observed data to update the distributions and get the **posterior distribution**. In practice, we often can’t calculate the posterior analytically, especially in complex models, so we turn to **sampling** methods like **Markov Chain Monte Carlo (MCMC)**. So fitting a parameterized model actually involves setting the parameters' prior distributions and then using a sampling method to get samples from the posterior.
+### Example
+Lets use an example of a coin flip: We'll use a prior for the head/tail probablity $$p\sim{} \mathcal{U}[0,1]$$. We want to update our belief on the distribution of $$\boldsymbol{p}$$ using a series of a observations. The likelihood of observing the series $$\mathcal{D} = \{y_1, y_2,..,y_n\}$$ is:
+$$
+P(\mathcal{D} \mid \boldsymbol{p}) = \prod_{i=1}^{n} p^{y_i} (1 - p)^{1 - y_i}
+$$
+and the updated posterior is proportional to:
+$$
+P(\boldsymbol{p} \mid \mathcal{D}) \propto P(\mathcal{D} \mid \boldsymbol{p})P(p)
+$$  
+We'll use a MCMC method called **Metropolis-Hastings** to sample a {$$p_1, p_2, .., p_n$$} series from the posterior: We iteratively propose new $$p_i$$ candidates and calculate their acceptance ratio:
+
+$$
+\boldsymbol{r} = \frac{
+    P(\mathcal{D} \mid new\,\boldsymbol{p_i}\, candidate)P(new \,\boldsymbol{p_i}\, candidate)
+    }{
+        P(\mathcal{D} \mid {\boldsymbol{p_{i-1}}})P(\boldsymbol{p_{i-1}})
+    }
+$$
+
+We set $$r=min(r,1)$$  
+Then randomly, with probability $$\boldsymbol{r}$$, we accept the new candidate as a sample $$p_i$$ .
+
+In this case it is, actually, possible to calculate the posterior $$p\sim Beta(1+\sum{y_i}, 1+n-\sum{y_i})$$
+
+For the sense of brevity we won't expand on MCMC methods and technicalities such as analyzing and validating the sampling process.
 
 ## Wine tasting analysis
 
@@ -115,7 +141,7 @@ Before diving into the results, it’s important to understand the different **p
 
 4.  For completeness, we should add a 4th case, **Hierarchical No Pooling**: the red and white wines are modeled independently, and the coefficients for each wine type are estimated separately. The model still imposes a hierarchical structure, but the posteriors for each wine type are sampled independently resulting in independent set of mean $${\mu}_{\text{red}}$$, $${\mu}_{\text{white}}$$
 
-The first metric we'll use is the **Leave-One-Out Cross-Validation (LOO-CV)** scores, which estimate the model’s out-of-sample predictive accuracy. Higher LOO-CV scores indicate better predictive performance (todo: elaborate on the confidence interval here)
+The first metric we'll use is the **Leave-One-Out Cross-Validation (LOO-CV)** scores, which estimate the model’s out-of-sample predictive accuracy. Higher LOO-CV scores indicate better predictive performance.
 
 | Model                            | Red Wines     | White Wines    | Both Wines     |
 | -------------------------------- | ------------- | -------------- | -------------- |
@@ -138,4 +164,4 @@ Now, let's see how hierarchical modeling can offer unique insights on the attri
 
 When looking at the effect of volatile acidity, residual sugar and density of white wines in Figure 1, we observe that
 partial pooling allowed for a more extreme attribute distributions thus giving new insight about their relative effect in white wines,
-and the no pooling results are mostly consistent with the MLE coefficients, as they fell within the 95% confidence intervals of the no pooling coefficients.
+and the no pooling results are mostly consistent with the MLE coefficients, as they fell within the 95% confidence intervals of the no pooling coefficients
